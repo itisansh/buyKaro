@@ -8,7 +8,7 @@ const router = express.Router();
 router.get("/", (req, res) => {
   let productArray = [...products];
   const page = parseInt(req.query.page) || 1;
-  const limit = parseInt(req.query.limit) || 10;
+  const limit = parseInt(req.query.limit) || 5;
   const search = req.query.search || "";
   const sort = req.query.sort || "";
   const category = req.query.category || "";
@@ -19,6 +19,14 @@ router.get("/", (req, res) => {
   productArray = filterCategory(category, productArray);
   productArray = filterMinPrice(minPrice, productArray);
   productArray = filterMaxPrice(maxPrice, productArray);
+  productArray = searchProduct(search, productArray);
+  productArray = productPagination(page, limit, productArray);
+
+  return res.status(200).send({
+    ok: true,
+    message: "succesful",
+    productArray,
+  });
 });
 
 function sortByPrice(sort, productArray) {
@@ -28,16 +36,26 @@ function sortByPrice(sort, productArray) {
 }
 function filterCategory(category, productArray) {
   if (category.length !== 0)
-    productArray = productArray.filter(productArray.category == category);
+    productArray = productArray.filter(
+      (product) => product.category == category,
+    );
   return productArray;
 }
 function filterMinPrice(minPrice, productArray) {
-  productArray = productArray.filter((product) => product.price > minPrice);
+  productArray = productArray.filter((product) => product.price >= minPrice);
   return productArray;
 }
 function filterMaxPrice(maxPrice, productArray) {
-  productArray = productArray.filter((product) => product.price > maxPrice);
+  productArray = productArray.filter((product) => product.price <= maxPrice);
   return productArray;
+}
+function searchProduct(search, productArray) {
+  return productArray.filter((product) =>
+    product.name.toLowerCase().includes(search.toLowerCase()),
+  );
+}
+function productPagination(page, limit, productArray) {
+  return productArray.slice((page - 1) * limit, page * limit);
 }
 
 // 2. get single product using id
