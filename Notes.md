@@ -3,7 +3,7 @@
 Stack: Node.js + Express (ES6 modules) + in-memory data (no MongoDB) + vanilla HTML/CSS/JS frontend.
 Auth: express-session (cookie-based) + bcrypt for password hashing. No JWT.
 
-Rule for using this guide: don't move to the next phase until the current one is tested and working. Test backend routes with curl/Postman/Thunder Client *before* touching frontend code for that feature.
+Rule for using this guide: don't move to the next phase until the current one is tested and working. Test backend routes with curl/Postman/Thunder Client _before_ touching frontend code for that feature.
 
 ---
 
@@ -34,6 +34,7 @@ Rule for using this guide: don't move to the next phase until the current one is
 - [ ] Wire into `server.js`: `app.use('/api/products', productRoutes)`
 
 **Checkpoint (test with curl/Postman, not browser):**
+
 - [ ] `GET /api/products` returns all products with pagination metadata
 - [ ] `GET /api/products?page=2&limit=5` returns correct slice
 - [ ] `GET /api/products?search=mouse` filters correctly
@@ -58,17 +59,18 @@ Don't proceed to Phase 2 until every box above is checked.
   ```
 - [ ] `routes/auth.js`:
   - `POST /signup` — validate fields, check duplicate email, `bcrypt.hash(password, 10)`, save user with `cart: []`
-  - `POST /login` — find user by email, `bcrypt.compare(password, user.password)`, if match set `req.session.userId = user.id`
+  - `POST /login` — find user by email, `bcrypt.compare(password, user.password)`, if match found then `req.session.userId = user.id`
   - `POST /logout` — `req.session.destroy()`
   - `GET /me` — protected, reads `req.session.userId`, looks up and returns that user (never send back the hashed password)
 - [ ] `middleware/auth.js` — checks `req.session.userId`; if missing, respond 401; else call `next()`
 - [ ] Wire into `server.js`: `app.use('/api/auth', authRoutes)`
 
 **Checkpoint (curl/Postman — for sessions, your tool needs to persist cookies between requests; Postman does this automatically per collection, curl needs `-c cookies.txt -b cookies.txt`):**
+
 - [ ] Signup with valid data → 201 success
 - [ ] Signup with duplicate email → proper error, not a crash
 - [ ] Signup with missing field → 400 error
-- [ ] Confirm the stored password is a bcrypt hash, NOT plain text
+- [❌] Confirm the stored password is a bcrypt hash, NOT plain text
 - [ ] Login with correct credentials → success, cookie set
 - [ ] Login with wrong password → 401 error, not a crash
 - [ ] `GET /api/auth/me` using the same cookie session → returns user
@@ -88,6 +90,7 @@ Don't proceed to Phase 2 until every box above is checked.
 - [ ] Wire into `server.js`: `app.use('/api/cart', cartRoutes)`
 
 **Checkpoint:**
+
 - [ ] Add item to cart → success, appears in `GET /cart`
 - [ ] Add same item again → quantity increments, not duplicated
 - [ ] Update quantity → reflects correctly
@@ -106,6 +109,7 @@ Don't proceed to Phase 2 until every box above is checked.
 - [ ] Wire into `server.js`: `app.use('/api/orders', orderRoutes)`
 
 **Checkpoint:**
+
 - [ ] Place order with items in cart → success, cart is now empty, order shows in order history
 - [ ] Place order with empty cart → proper error, not a crash
 - [ ] `GET /orders` only shows that user's orders, not everyone's
@@ -192,8 +196,9 @@ Don't proceed to Phase 2 until every box above is checked.
 ## When you get stuck
 
 Come back with the **specific error message or specific behavior**, not "it's not working." Good questions to bring back:
+
 - "My `POST /cart/add` returns 401 even though I logged in first, here's my curl command and my auth middleware"
 - "My pagination shows the right count but the same products on every page"
 - "Login works in Postman but my frontend fetch doesn't seem to keep the session — is this a credentials/cookie issue?"
 
-That keeps you in the driver's seat — you write it, I help you debug or explain the *why* behind a fix rather than handing you replacement code.
+That keeps you in the driver's seat — you write it, I help you debug or explain the _why_ behind a fix rather than handing you replacement code.

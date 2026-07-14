@@ -1,3 +1,7 @@
 let users = [];
+let idCount = 1;
 
-export { users };
+export function increment() {
+  idCount++; // Or use idCount++
+}
+export { users, idCount };
