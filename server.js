@@ -5,6 +5,7 @@ import session from "express-session";
 //importing routes
 import productRoutes from "./routes/products.js";
 import authRoutes from "./routes/auth.js";
+import cartRoutes from "./routes/cart.js";
 
 import dotenv from "dotenv";
 dotenv.config();
@@ -15,7 +16,7 @@ app.use(express.json());
 //1. get product route
 app.use("/api/products", productRoutes);
 
-//2. middleware setup
+// middleware setup
 app.use(
   session({
     secret: process.env.SESSION_SECRET,
@@ -23,8 +24,11 @@ app.use(
     saveUninitialized: false,
   }),
 );
-// user auth route connect with app
+//2. user auth route connect with app
 app.use("/api/auth", authRoutes);
+
+//3. user cart route
+app.use("/api/cart", cartRoutes);
 
 // server starts from here
 app.listen(process.env.PORT, () => {
