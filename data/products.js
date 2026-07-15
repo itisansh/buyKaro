@@ -6,6 +6,7 @@ const products = [
     category: "Electronics",
     stock: 45,
     createdAt: "2026-01-12",
+    image: "https://dummyjson.com/image/200x200",
   },
   {
     id: 2,
@@ -14,6 +15,7 @@ const products = [
     category: "Electronics",
     stock: 20,
     createdAt: "2026-02-05",
+    image: "https://dummyjson.com/image/200x200",
   },
   {
     id: 3,
@@ -22,6 +24,7 @@ const products = [
     category: "Footwear",
     stock: 18,
     createdAt: "2026-03-10",
+    image: "https://dummyjson.com/image/200x200",
   },
   {
     id: 4,
@@ -30,6 +33,7 @@ const products = [
     category: "Clothing",
     stock: 60,
     createdAt: "2026-01-28",
+    image: "https://dummyjson.com/image/200x200",
   },
   {
     id: 5,
@@ -38,6 +42,7 @@ const products = [
     category: "Electronics",
     stock: 12,
     createdAt: "2026-04-15",
+    image: "https://dummyjson.com/image/200x200",
   },
   {
     id: 6,
@@ -46,6 +51,7 @@ const products = [
     category: "Furniture",
     stock: 8,
     createdAt: "2026-05-02",
+    image: "https://dummyjson.com/image/200x200",
   },
   {
     id: 7,
@@ -54,6 +60,7 @@ const products = [
     category: "Kitchen",
     stock: 100,
     createdAt: "2026-02-18",
+    image: "https://dummyjson.com/image/200x200",
   },
   {
     id: 8,
@@ -62,6 +69,7 @@ const products = [
     category: "Electronics",
     stock: 7,
     createdAt: "2026-06-01",
+    image: "https://dummyjson.com/image/200x200",
   },
   {
     id: 9,
@@ -70,6 +78,7 @@ const products = [
     category: "Accessories",
     stock: 35,
     createdAt: "2026-03-22",
+    image: "https://dummyjson.com/image/200x200",
   },
   {
     id: 10,
@@ -78,6 +87,7 @@ const products = [
     category: "Kitchen",
     stock: 80,
     createdAt: "2026-01-09",
+    image: "https://dummyjson.com/image/200x200",
   },
   {
     id: 11,
@@ -86,6 +96,7 @@ const products = [
     category: "Electronics",
     stock: 14,
     createdAt: "2026-05-20",
+    image: "https://dummyjson.com/image/200x200",
   },
   {
     id: 12,
@@ -94,6 +105,7 @@ const products = [
     category: "Stationery",
     stock: 200,
     createdAt: "2026-04-08",
+    image: "https://dummyjson.com/image/200x200",
   },
   {
     id: 13,
@@ -102,6 +114,7 @@ const products = [
     category: "Furniture",
     stock: 25,
     createdAt: "2026-02-27",
+    image: "https://dummyjson.com/image/200x200",
   },
   {
     id: 14,
@@ -110,6 +123,7 @@ const products = [
     category: "Accessories",
     stock: 40,
     createdAt: "2026-03-14",
+    image: "https://dummyjson.com/image/200x200",
   },
   {
     id: 15,
@@ -118,6 +132,7 @@ const products = [
     category: "Fitness",
     stock: 22,
     createdAt: "2026-06-12",
+    image: "https://dummyjson.com/image/200x200",
   },
   {
     id: 16,
@@ -126,6 +141,7 @@ const products = [
     category: "Fitness",
     stock: 50,
     createdAt: "2026-04-30",
+    image: "https://dummyjson.com/image/200x200",
   },
   {
     id: 17,
@@ -134,6 +150,7 @@ const products = [
     category: "Home",
     stock: 150,
     createdAt: "2026-01-19",
+    image: "https://dummyjson.com/image/200x200",
   },
   {
     id: 18,
@@ -142,6 +159,7 @@ const products = [
     category: "Accessories",
     stock: 16,
     createdAt: "2026-05-11",
+    image: "https://dummyjson.com/image/200x200",
   },
   {
     id: 19,
@@ -150,6 +168,7 @@ const products = [
     category: "Kitchen",
     stock: 11,
     createdAt: "2026-02-21",
+    image: "https://dummyjson.com/image/200x200",
   },
   {
     id: 20,
@@ -158,6 +177,7 @@ const products = [
     category: "Office",
     stock: 30,
     createdAt: "2026-06-25",
+    image: "https://dummyjson.com/image/200x200",
   },
 ];
 

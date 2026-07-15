@@ -1,6 +1,7 @@
 import { orders, orderIdCount, incrementOrderIdCount } from "../data/orders.js";
 import { users, emptyCart } from "../data/users.js";
 import auth from "../middleware/auth.js";
+import express from "express";
 
 const router = express.Router();
 

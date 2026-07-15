@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ShopEase</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+
+  <header class="navbar">
+    <a href="/index.html" class="logo">ShopEase</a>
+    <nav>
+      <a href="/index.html">Home</a>
+      <a href="/cart.html">Cart</a>
+      <a href="/orders.html">Orders</a>
+      <span id="auth-links">
+        <a href="/login.html">Login</a>
+        <a href="/signup.html">Signup</a>
+      </span>
+      <span id="user-info">
+        <span id="user-email"></span>
+        <button id="logout-btn">Logout</button>
+      </span>
+    </nav>
+  </header>
+
+  <main>
+    <section class="controls">
+      <input type="text" id="search-input" placeholder="Search products...">
+
+      <select id="sort-select">
+        <option value="">Sort by</option>
+        <option value="low">Price: Low to High</option>
+        <option value="high">Price: High to Low</option>
+      </select>
+
+      <select id="category-select">
+        <option value="">All Categories</option>
+        <option value="Electronics">Electronics</option>
+        <option value="Footwear">Footwear</option>
+        <option value="Clothing">Clothing</option>
+        <option value="Furniture">Furniture</option>
+        <option value="Kitchen">Kitchen</option>
+        <option value="Accessories">Accessories</option>
+        <option value="Stationery">Stationery</option>
+        <option value="Fitness">Fitness</option>
+        <option value="Home">Home</option>
+        <option value="Office">Office</option>
+      </select>
+
+      <input type="number" id="min-price" placeholder="Min ₹">
+      <input type="number" id="max-price" placeholder="Max ₹">
+      <button id="apply-filters-btn">Apply</button>
+    </section>
+
+    <section id="product-list" class="product-grid">
+      <!-- product cards injected here by products.js -->
+    </section>
+
+    <section class="pagination">
+      <button id="prev-btn">Prev</button>
+      <span id="page-label">Page 1</span>
+      <button id="next-btn">Next</button>
+    </section>
+  </main>
+
+  <script type="module" src="/js/api.js"></script>
+  <script type="module" src="/js/auth.js"></script>
+  <script type="module" src="/js/products.js"></script>
+</body>
+</html>

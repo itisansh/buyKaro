@@ -13,6 +13,8 @@ dotenv.config();
 
 let app = express();
 app.use(express.json());
+//static file serving set up
+app.use(express.static("public"));
 
 //1. get product route
 app.use("/api/products", productRoutes);
