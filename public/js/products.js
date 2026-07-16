@@ -23,7 +23,11 @@ async function loadProducts(page = 1) {
   const list = document.getElementById("product-list");
 
   if (!res.ok || !res.productArray || res.productArray.length === 0) {
-    list.innerHTML = `<p id="no-results">No products found.</p>`;
+    list.innerHTML = `
+      <div id="no-results" class="empty-state" style="display:flex; grid-column: 1 / -1;">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="10.5" cy="10.5" r="6.5"/><path d="M20 20l-4.3-4.3"/><path d="M8 8l5 5"/></svg>
+        <p>No products found. Try adjusting your search or filters.</p>
+      </div>`;
     updatePaginationButtons(page, 0);
     return;
   }
@@ -73,12 +77,58 @@ async function addToCart(itemId) {
   }
 }
 
+// Keeps the "Filters" button badge in sync with how many advanced filters are active.
+function updateFilterBadge() {
+  const minPrice = document.getElementById("min-price").value;
+  const maxPrice = document.getElementById("max-price").value;
+  const activeCount = (minPrice ? 1 : 0) + (maxPrice ? 1 : 0);
+
+  const filterBtn = document.getElementById("advanced-filter-btn");
+  const filterCount = document.getElementById("filter-count");
+
+  filterCount.textContent = activeCount;
+  filterBtn.classList.toggle("has-filters", activeCount > 0);
+}
+
+function closeFilterPanel() {
+  document.getElementById("advanced-filter-panel").classList.remove("open");
+  document.getElementById("advanced-filter-btn").setAttribute("aria-expanded", "false");
+}
+
 document.addEventListener("DOMContentLoaded", () => {
   loadProducts(1);
 
-  document
-    .getElementById("apply-filters-btn")
-    .addEventListener("click", () => loadProducts(1));
+  const filterBtn = document.getElementById("advanced-filter-btn");
+  const filterPanel = document.getElementById("advanced-filter-panel");
+
+  filterBtn.addEventListener("click", (e) => {
+    e.stopPropagation();
+    const isOpen = filterPanel.classList.toggle("open");
+    filterBtn.setAttribute("aria-expanded", String(isOpen));
+  });
+
+  // Clicking anywhere outside the panel closes it.
+  document.addEventListener("click", (e) => {
+    if (!filterPanel.contains(e.target) && e.target !== filterBtn) {
+      closeFilterPanel();
+    }
+  });
+
+  filterPanel.addEventListener("click", (e) => e.stopPropagation());
+
+  document.getElementById("apply-filters-btn").addEventListener("click", () => {
+    updateFilterBadge();
+    closeFilterPanel();
+    loadProducts(1);
+  });
+
+  document.getElementById("clear-filters-btn").addEventListener("click", () => {
+    document.getElementById("min-price").value = "";
+    document.getElementById("max-price").value = "";
+    updateFilterBadge();
+    closeFilterPanel();
+    loadProducts(1);
+  });
 
   document.getElementById("search-input").addEventListener("keypress", (e) => {
     if (e.key === "Enter") loadProducts(1);

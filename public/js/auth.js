@@ -28,8 +28,8 @@ async function handleLogin() {
   if (res.ok) {
     window.location.href = "/index.html";
   } else {
-    errorBox.textContent = res.message || "Login failed.";
-    errorBox.style.display = "block";
+    document.getElementById("login-error-text").textContent = res.message || "Login failed.";
+    errorBox.style.display = "flex";
   }
 }
 
@@ -43,8 +43,8 @@ async function handleSignup() {
   if (res.ok) {
     window.location.href = "/login.html";
   } else {
-    errorBox.textContent = res.message || "Signup failed.";
-    errorBox.style.display = "block";
+    document.getElementById("signup-error-text").textContent = res.message || "Signup failed.";
+    errorBox.style.display = "flex";
   }
 }
 
@@ -53,8 +53,26 @@ async function handleLogout() {
   window.location.href = "/login.html";
 }
 
+// Toggles between light and dark mode and remembers the choice.
+function initThemeToggle() {
+  const toggleBtn = document.getElementById("theme-toggle-btn");
+  if (!toggleBtn) return;
+
+  toggleBtn.addEventListener("click", () => {
+    const isDark = document.documentElement.getAttribute("data-theme") === "dark";
+    if (isDark) {
+      document.documentElement.removeAttribute("data-theme");
+      localStorage.setItem("theme", "light");
+    } else {
+      document.documentElement.setAttribute("data-theme", "dark");
+      localStorage.setItem("theme", "dark");
+    }
+  });
+}
+
 document.addEventListener("DOMContentLoaded", () => {
   checkAuth();
+  initThemeToggle();
 
   const logoutBtn = document.getElementById("logout-btn");
   if (logoutBtn) logoutBtn.addEventListener("click", handleLogout);
@@ -71,11 +89,15 @@ document.addEventListener("DOMContentLoaded", () => {
   if (hamburgerBtn && navLinks) {
     hamburgerBtn.addEventListener("click", () => {
       navLinks.classList.toggle("open");
+      hamburgerBtn.classList.toggle("active");
     });
 
     // Close the menu automatically if a link inside it is clicked
     navLinks.querySelectorAll("a, button").forEach((el) => {
-      el.addEventListener("click", () => navLinks.classList.remove("open"));
+      el.addEventListener("click", () => {
+        navLinks.classList.remove("open");
+        hamburgerBtn.classList.remove("active");
+      });
     });
   }
 });

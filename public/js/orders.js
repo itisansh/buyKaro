@@ -12,7 +12,7 @@ async function loadOrders() {
 
   if (!res.ok || !res.userOrders || res.userOrders.length === 0) {
     container.innerHTML = "";
-    noOrdersMsg.style.display = "block";
+    noOrdersMsg.style.display = "flex";
     return;
   }
 

@@ -11,7 +11,8 @@ async function loadProduct() {
   const container = document.getElementById("product-detail");
 
   if (!res.ok || !res.productObj) {
-    container.innerHTML = `<p>Product not found.</p>`;
+    console.warn("Product lookup failed for id:", id, "response:", res);
+    container.innerHTML = `<p>${res.message || "Product not found."}</p>`;
     return;
   }
 

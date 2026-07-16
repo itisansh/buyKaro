@@ -13,7 +13,7 @@ async function loadCart() {
 
   if (!res.ok || !res.cart || res.cart.length === 0) {
     tbody.innerHTML = "";
-    emptyMsg.style.display = "block";
+    emptyMsg.style.display = "flex";
     totalSpan.textContent = "0";
     return;
   }

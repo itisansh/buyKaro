@@ -74,10 +74,12 @@ router.get("/:id", (req, res, next) => {
   try {
     const id = parseInt(req.params.id);
     // .find() helps extract a specific element inside an array
-    const productObj = products.find((product) => product.id === id);
-    if (!productObj) return res.status(200).send({ ok: true, productObj });
-    else
+    const productObj = products.find((product) => product.id == id);
+    if (!productObj) {
       return res.status(404).send({ ok: false, message: "product not found" });
+    }
+
+    return res.status(200).send({ ok: true, productObj });
   } catch (err) {
     next(err);
   }
