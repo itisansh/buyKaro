@@ -27,14 +27,14 @@ async function loadCart() {
       total += subtotal;
       return `
       <tr>
-        <td>${item.name}</td>
-        <td>₹${item.price}</td>
-        <td>
+        <td data-label="Product">${item.name}</td>
+        <td data-label="Price">₹${item.price}</td>
+        <td data-label="Quantity">
           <input type="number" class="qty-input" data-id="${item.id}"
                  value="${item.quantity}" min="1" max="${item.stock}">
         </td>
-        <td>₹${subtotal}</td>
-        <td><button class="remove-btn" data-id="${item.id}">Remove</button></td>
+        <td data-label="Subtotal">₹${subtotal}</td>
+        <td data-label=""><button class="remove-btn" data-id="${item.id}">Remove</button></td>
       </tr>
     `;
     })

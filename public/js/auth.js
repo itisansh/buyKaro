@@ -64,6 +64,20 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const signupBtn = document.getElementById("signup-btn");
   if (signupBtn) signupBtn.addEventListener("click", handleSignup);
+
+  // Hamburger menu — toggles the nav open/closed on small screens
+  const hamburgerBtn = document.getElementById("hamburger-btn");
+  const navLinks = document.getElementById("nav-links");
+  if (hamburgerBtn && navLinks) {
+    hamburgerBtn.addEventListener("click", () => {
+      navLinks.classList.toggle("open");
+    });
+
+    // Close the menu automatically if a link inside it is clicked
+    navLinks.querySelectorAll("a, button").forEach((el) => {
+      el.addEventListener("click", () => navLinks.classList.remove("open"));
+    });
+  }
 });
 
 export { checkAuth };

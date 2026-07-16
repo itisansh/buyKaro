@@ -16,6 +16,15 @@ a {
   color: #2563eb;
 }
 
+.navbar nav a {
+  transition: color 0.15s ease;
+}
+
+.navbar nav a:hover {
+  color: #1d4ed8;
+  text-decoration: underline;
+}
+
 /* Navbar */
 .navbar {
   display: flex;
@@ -24,8 +33,7 @@ a {
   background: #ffffff;
   padding: 14px 24px;
   border-bottom: 1px solid #ddd;
-  flex-wrap: wrap;
-  gap: 10px;
+  position: relative;
 }
 
 .navbar .logo {
@@ -41,6 +49,11 @@ a {
   flex-wrap: wrap;
 }
 
+#auth-links {
+  display: inline-flex;
+  gap: 14px;
+}
+
 #user-info {
   display: none;
   align-items: center;
@@ -49,6 +62,24 @@ a {
 
 #user-info button {
   padding: 6px 12px;
+}
+
+/* Hamburger — hidden on desktop, shown only on small screens */
+.hamburger-btn {
+  display: none;
+  background: none;
+  border: none;
+  color: #222;
+  font-size: 26px;
+  line-height: 1;
+  padding: 4px 8px;
+  cursor: pointer;
+}
+
+.hamburger-btn:hover {
+  background: none;
+  transform: none;
+  box-shadow: none;
 }
 
 main {
@@ -66,15 +97,25 @@ button {
   border-radius: 4px;
   cursor: pointer;
   font-size: 14px;
+  transition: background 0.2s ease, transform 0.15s ease, box-shadow 0.2s ease;
 }
 
 button:hover {
   background: #1d4ed8;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 10px rgba(37, 99, 235, 0.25);
+}
+
+button:active {
+  transform: translateY(0);
+  box-shadow: none;
 }
 
 button:disabled {
   background: #aaa;
   cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
 }
 
 input,
@@ -119,6 +160,12 @@ select {
   border: 1px solid #ddd;
   border-radius: 6px;
   padding: 14px;
+  transition: box-shadow 0.2s ease, transform 0.15s ease;
+}
+
+.product-card:hover {
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
+  transform: translateY(-2px);
 }
 
 .product-image {
@@ -304,4 +351,136 @@ th {
 .order-card ul {
   margin-top: 8px;
   padding-left: 20px;
+}
+
+/* Footer */
+.site-footer {
+  margin-top: 40px;
+  padding: 24px 16px;
+  background: #ffffff;
+  border-top: 1px solid #ddd;
+  text-align: center;
+  color: #555;
+  font-size: 14px;
+}
+
+.site-footer p {
+  margin-bottom: 8px;
+}
+
+.footer-links {
+  display: flex;
+  justify-content: center;
+  gap: 18px;
+  flex-wrap: wrap;
+}
+
+.footer-links a {
+  color: #2563eb;
+  transition: color 0.15s ease;
+}
+
+.footer-links a:hover {
+  color: #1d4ed8;
+  text-decoration: underline;
+}
+
+/* Responsive layout */
+@media (max-width: 768px) {
+  .hamburger-btn {
+    display: block;
+  }
+
+  .navbar nav {
+    display: none;
+    flex-direction: column;
+    align-items: flex-start;
+    width: 100%;
+    gap: 12px;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background: #ffffff;
+    border-bottom: 1px solid #ddd;
+    padding: 16px 24px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.06);
+  }
+
+  .navbar nav.open {
+    display: flex;
+  }
+
+  #auth-links,
+  #user-info {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  main {
+    padding: 0 12px;
+  }
+
+  .controls {
+    flex-direction: column;
+  }
+
+  .controls input[type="text"],
+  .controls input[type="number"],
+  .controls select {
+    width: 100%;
+  }
+
+  #product-detail {
+    max-width: 100%;
+  }
+
+  .cart-summary {
+    flex-direction: column;
+    gap: 12px;
+    align-items: stretch;
+    text-align: center;
+  }
+
+  table,
+  thead,
+  tbody,
+  th,
+  td,
+  tr {
+    display: block;
+  }
+
+  thead {
+    display: none;
+  }
+
+  tbody tr {
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    margin-bottom: 12px;
+    padding: 10px;
+  }
+
+  tbody td {
+    border: none;
+    padding: 6px 0;
+  }
+
+  tbody td::before {
+    content: attr(data-label);
+    font-weight: bold;
+    display: inline-block;
+    width: 100px;
+  }
+}
+
+@media (max-width: 480px) {
+  .navbar .logo {
+    font-size: 18px;
+  }
+
+  .auth-form {
+    margin: 20px 12px;
+  }
 }
