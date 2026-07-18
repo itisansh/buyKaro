@@ -387,6 +387,10 @@ button:disabled {
 }
 
 .btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
   background: var(--surface-alt);
   color: var(--primary-dark);
 }
@@ -394,6 +398,11 @@ button:disabled {
 .btn-secondary:hover {
   background: var(--surface-hover);
   box-shadow: none;
+}
+.btn-secondary svg {
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
 }
 
 input,
