@@ -105,7 +105,9 @@ router.get("/me", auth, (req, res, next) => {
     let userID = req.session.userId;
     //the Array.prototype.find() method returns a reference if the element is an object or array, but returns a copy (by value) if the element is a primitive type (like a number, string, or boolean).
     // find() returns a reference to the object.
-    // Make a copy only if you want to avoid modifying the original object.    let user = users.find((user) => user.id == userID);
+    // Make a copy only if you want to avoid modifying the original object.
+    
+    let user = users.find((user) => user.id == userID);
 
     if (user == undefined) {
       return res.status(401).send({ ok: false, message: "user not found" });

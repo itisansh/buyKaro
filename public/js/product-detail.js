@@ -1,4 +1,5 @@
 import { apiRequest } from "./api.js";
+import { showToast } from "./toast.js";
 
 function getProductId() {
   const params = new URLSearchParams(window.location.search);
@@ -18,7 +19,7 @@ async function loadProduct() {
 
   const p = res.productObj;
   container.innerHTML = `
-    <img src="${p.image}" alt="${p.name}" class="detail-image">
+    <img src="${p.image}" alt="${p.name}" class="detail-image" decoding="async" width="260" height="220" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 260 220%22%3E%3Crect width=%22260%22 height=%22220%22 fill=%22%23F0EDFC%22/%3E%3C/svg%3E'">
     <h1>${p.name}</h1>
     <p class="price">₹${p.price}</p>
     <p class="category">Category: ${p.category}</p>
@@ -35,15 +36,17 @@ async function addToCart(itemId) {
   const res = await apiRequest("/cart/add", "POST", { itemId: Number(itemId) });
 
   if (res.status === 401) {
-    alert("Please login to add items to your cart.");
-    window.location.href = "/login.html";
+    showToast("Please login to add items to your cart.", "info");
+    setTimeout(() => {
+      window.location.href = "/login.html";
+    }, 700);
     return;
   }
 
   if (res.ok) {
-    alert("Added to cart.");
+    showToast("Added to cart.", "success");
   } else {
-    alert(res.message || "Could not add to cart.");
+    showToast(res.message || "Could not add to cart.", "error");
   }
 }
 

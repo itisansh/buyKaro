@@ -1,4 +1,5 @@
 import { orders, orderIdCount, incrementOrderIdCount } from "../data/orders.js";
+import { products } from "../data/products.js";
 import { users, emptyCart } from "../data/users.js";
 import auth from "../middleware/auth.js";
 import express from "express";
@@ -18,6 +19,13 @@ router.post("/", auth, (req, res, next) => {
         message: "Cart is empty",
       });
     }
+    products.forEach((product) => {
+      cart.forEach((cartItem) => {
+        if (cartItem.id == product.id) {
+          product.stock = product.stock - cartItem.quantity;
+        }
+      });
+    });
     let totalPrice = cart.reduce((sum, i) => {
       return sum + i.price * i.quantity;
     }, 0);

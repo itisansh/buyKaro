@@ -1,4 +1,5 @@
 import { apiRequest } from "./api.js";
+import { showToast } from "./toast.js";
 
 async function loadCart() {
   const res = await apiRequest("/cart");
@@ -60,7 +61,7 @@ async function updateQuantity(itemId, quantity) {
   });
 
   if (!res.ok) {
-    alert(res.message || "Could not update quantity.");
+    showToast(res.message || "Could not update quantity.", "error");
   }
   loadCart();
 }
@@ -69,7 +70,7 @@ async function removeItem(itemId) {
   const res = await apiRequest(`/cart/remove/${itemId}`, "DELETE");
 
   if (!res.ok) {
-    alert(res.message || "Could not remove item.");
+    showToast(res.message || "Could not remove item.", "error");
   }
   loadCart();
 }
@@ -78,10 +79,12 @@ async function checkout() {
   const res = await apiRequest("/orders", "POST");
 
   if (res.ok) {
-    alert("Order placed successfully.");
-    window.location.href = "/orders.html";
+    showToast("Order placed successfully.", "success");
+    setTimeout(() => {
+      window.location.href = "/orders.html";
+    }, 700);
   } else {
-    alert(res.message || "Could not place order.");
+    showToast(res.message || "Could not place order.", "error");
   }
 }
 

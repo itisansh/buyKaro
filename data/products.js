@@ -6,7 +6,8 @@ const products = [
     category: "Electronics",
     stock: 45,
     createdAt: "2026-01-12",
-    image: "https://dummyjson.com/image/200x200",
+    image:
+      "https://images.pexels.com/photos/32890143/pexels-photo-32890143.jpeg?auto=compress&cs=tinysrgb&w=400",
   },
   {
     id: 2,
@@ -15,7 +16,8 @@ const products = [
     category: "Electronics",
     stock: 20,
     createdAt: "2026-02-05",
-    image: "https://dummyjson.com/image/200x200",
+    image:
+      "https://images.pexels.com/photos/18311093/pexels-photo-18311093.jpeg?auto=compress&cs=tinysrgb&w=400",
   },
   {
     id: 3,
@@ -24,7 +26,8 @@ const products = [
     category: "Footwear",
     stock: 18,
     createdAt: "2026-03-10",
-    image: "https://dummyjson.com/image/200x200",
+    image:
+      "https://images.pexels.com/photos/29342147/pexels-photo-29342147.jpeg?auto=compress&cs=tinysrgb&w=400",
   },
   {
     id: 4,
@@ -33,7 +36,8 @@ const products = [
     category: "Clothing",
     stock: 60,
     createdAt: "2026-01-28",
-    image: "https://dummyjson.com/image/200x200",
+    image:
+      "https://images.pexels.com/photos/37191616/pexels-photo-37191616.jpeg?auto=compress&cs=tinysrgb&w=400",
   },
   {
     id: 5,
@@ -42,7 +46,8 @@ const products = [
     category: "Electronics",
     stock: 12,
     createdAt: "2026-04-15",
-    image: "https://dummyjson.com/image/200x200",
+    image:
+      "https://images.pexels.com/photos/12502430/pexels-photo-12502430.jpeg?auto=compress&cs=tinysrgb&w=400",
   },
   {
     id: 6,
@@ -51,7 +56,8 @@ const products = [
     category: "Furniture",
     stock: 8,
     createdAt: "2026-05-02",
-    image: "https://dummyjson.com/image/200x200",
+    image:
+      "https://images.pexels.com/photos/12269763/pexels-photo-12269763.jpeg?auto=compress&cs=tinysrgb&w=400",
   },
   {
     id: 7,
@@ -60,7 +66,8 @@ const products = [
     category: "Kitchen",
     stock: 100,
     createdAt: "2026-02-18",
-    image: "https://dummyjson.com/image/200x200",
+    image:
+      "https://images.pexels.com/photos/2168346/pexels-photo-2168346.png?auto=compress&cs=tinysrgb&w=400",
   },
   {
     id: 8,
@@ -69,7 +76,8 @@ const products = [
     category: "Electronics",
     stock: 7,
     createdAt: "2026-06-01",
-    image: "https://dummyjson.com/image/200x200",
+    image:
+      "https://images.pexels.com/photos/5552789/pexels-photo-5552789.jpeg?auto=compress&cs=tinysrgb&w=400",
   },
   {
     id: 9,
@@ -78,7 +86,8 @@ const products = [
     category: "Accessories",
     stock: 35,
     createdAt: "2026-03-22",
-    image: "https://dummyjson.com/image/200x200",
+    image:
+      "https://images.pexels.com/photos/20094394/pexels-photo-20094394.jpeg?auto=compress&cs=tinysrgb&w=400",
   },
   {
     id: 10,
@@ -87,7 +96,8 @@ const products = [
     category: "Kitchen",
     stock: 80,
     createdAt: "2026-01-09",
-    image: "https://dummyjson.com/image/200x200",
+    image:
+      "https://images.pexels.com/photos/7397134/pexels-photo-7397134.jpeg?auto=compress&cs=tinysrgb&w=400",
   },
   {
     id: 11,
@@ -96,7 +106,8 @@ const products = [
     category: "Electronics",
     stock: 14,
     createdAt: "2026-05-20",
-    image: "https://dummyjson.com/image/200x200",
+    image:
+      "https://images.pexels.com/photos/31541678/pexels-photo-31541678.jpeg?auto=compress&cs=tinysrgb&w=400",
   },
   {
     id: 12,
@@ -105,7 +116,8 @@ const products = [
     category: "Stationery",
     stock: 200,
     createdAt: "2026-04-08",
-    image: "https://dummyjson.com/image/200x200",
+    image:
+      "https://images.pexels.com/photos/5321357/pexels-photo-5321357.jpeg?auto=compress&cs=tinysrgb&w=400",
   },
   {
     id: 13,
@@ -114,7 +126,8 @@ const products = [
     category: "Furniture",
     stock: 25,
     createdAt: "2026-02-27",
-    image: "https://dummyjson.com/image/200x200",
+    image:
+      "https://images.pexels.com/photos/112811/pexels-photo-112811.jpeg?auto=compress&cs=tinysrgb&w=400",
   },
   {
     id: 14,
@@ -123,7 +136,8 @@ const products = [
     category: "Accessories",
     stock: 40,
     createdAt: "2026-03-14",
-    image: "https://dummyjson.com/image/200x200",
+    image:
+      "https://images.pexels.com/photos/4452372/pexels-photo-4452372.jpeg?auto=compress&cs=tinysrgb&w=400",
   },
   {
     id: 15,
@@ -132,7 +146,8 @@ const products = [
     category: "Fitness",
     stock: 22,
     createdAt: "2026-06-12",
-    image: "https://dummyjson.com/image/200x200",
+    image:
+      "https://images.pexels.com/photos/8436580/pexels-photo-8436580.jpeg?auto=compress&cs=tinysrgb&w=400",
   },
   {
     id: 16,
@@ -141,7 +156,8 @@ const products = [
     category: "Fitness",
     stock: 50,
     createdAt: "2026-04-30",
-    image: "https://dummyjson.com/image/200x200",
+    image:
+      "https://images.pexels.com/photos/16412053/pexels-photo-16412053.jpeg?auto=compress&cs=tinysrgb&w=400",
   },
   {
     id: 17,
@@ -150,7 +166,8 @@ const products = [
     category: "Home",
     stock: 150,
     createdAt: "2026-01-19",
-    image: "https://dummyjson.com/image/200x200",
+    image:
+      "https://images.pexels.com/photos/20943579/pexels-photo-20943579.jpeg?auto=compress&cs=tinysrgb&w=400",
   },
   {
     id: 18,
@@ -159,7 +176,8 @@ const products = [
     category: "Accessories",
     stock: 16,
     createdAt: "2026-05-11",
-    image: "https://dummyjson.com/image/200x200",
+    image:
+      "https://images.pexels.com/photos/32677246/pexels-photo-32677246.jpeg?auto=compress&cs=tinysrgb&w=400",
   },
   {
     id: 19,
@@ -168,7 +186,8 @@ const products = [
     category: "Kitchen",
     stock: 11,
     createdAt: "2026-02-21",
-    image: "https://dummyjson.com/image/200x200",
+    image:
+      "https://images.pexels.com/photos/10900909/pexels-photo-10900909.jpeg?auto=compress&cs=tinysrgb&w=400",
   },
   {
     id: 20,
@@ -177,7 +196,8 @@ const products = [
     category: "Office",
     stock: 30,
     createdAt: "2026-06-25",
-    image: "https://dummyjson.com/image/200x200",
+    image:
+      "https://images.pexels.com/photos/4533076/pexels-photo-4533076.jpeg?auto=compress&cs=tinysrgb&w=400",
   },
 ];
 

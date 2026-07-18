@@ -1,4 +1,5 @@
 import { apiRequest } from "./api.js";
+import { showToast } from "./toast.js";
 
 let currentPage = 1;
 const limit = 8;
@@ -37,7 +38,7 @@ async function loadProducts(page = 1) {
       (p) => `
     <div class="product-card">
       <a href="/product.html?id=${p.id}">
-        <img src="${p.image}" alt="${p.name}" class="product-image">
+        <img src="${p.image}" alt="${p.name}" class="product-image" loading="lazy" decoding="async" width="300" height="160" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 300 160%22%3E%3Crect width=%22300%22 height=%22160%22 fill=%22%23F0EDFC%22/%3E%3C/svg%3E'">
       </a>
       <h3><a href="/product.html?id=${p.id}">${p.name}</a></h3>
       <p class="price">₹${p.price}</p>
@@ -65,15 +66,17 @@ async function addToCart(itemId) {
   const res = await apiRequest("/cart/add", "POST", { itemId: Number(itemId) });
 
   if (res.status === 401) {
-    alert("Please login to add items to your cart.");
-    window.location.href = "/login.html";
+    showToast("Please login to add items to your cart.", "info");
+    setTimeout(() => {
+      window.location.href = "/login.html";
+    }, 700);
     return;
   }
 
   if (res.ok) {
-    alert("Added to cart.");
+    showToast("Added to cart.", "success");
   } else {
-    alert(res.message || "Could not add to cart.");
+    showToast(res.message || "Could not add to cart.", "error");
   }
 }
 
@@ -133,6 +136,17 @@ document.addEventListener("DOMContentLoaded", () => {
   document.getElementById("search-input").addEventListener("keypress", (e) => {
     if (e.key === "Enter") loadProducts(1);
   });
+
+  document.getElementById("search-icon-btn").addEventListener("click", () => loadProducts(1));
+  document.getElementById("search-icon-btn").addEventListener("keydown", (e) => {
+    if (e.key === "Enter" || e.key === " ") {
+      e.preventDefault();
+      loadProducts(1);
+    }
+  });
+
+  document.getElementById("sort-select").addEventListener("change", () => loadProducts(1));
+  document.getElementById("category-select").addEventListener("change", () => loadProducts(1));
 
   document
     .getElementById("prev-btn")
