@@ -5,3 +5,15 @@ FRONTEND_DOCS.md
 Build Guide.md
 Backend_Handbook comprehensive.md
 docs
+.env
+.env.*
+!.env.example
+
+.aws/
+.codex/
+.agents/
+
+*.log
+coverage/
+.DS_Store
+Thumbs.db

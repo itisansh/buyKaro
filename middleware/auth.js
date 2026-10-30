@@ -1,13 +1,8 @@
-const auth = (req, res, next) => {
-  //The default value of req.session.userId is undefined. Because undefined is a falsy value in JavaScript
-  if (!req.session.userId) {
-    return res.status(401).send({
-      ok: false,
-      message: "Please login first",
-    });
-  }
+import { users } from "../data/users.js";
 
+export default function auth(req, res, next) {
+  const user = users.find(user => user.id === req.session.userId);
+  if (!user) return res.status(401).json({ ok: false, message: "Please log in first." });
+  req.user = user;
   next();
-};
-
-export default auth;
+}

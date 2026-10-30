@@ -1,5 +1,13 @@
-let users = [];
-let idCount = 1;
+import bcrypt from "bcrypt";
+
+// Shared demo account, recreated with the in-memory data on every restart.
+let users = [{
+  id: 1,
+  email: "admin",
+  password: await bcrypt.hash("password", 10),
+  cart: [],
+}];
+let idCount = 2;
 export function increment() {
   idCount++; // Or use idCount++
 }

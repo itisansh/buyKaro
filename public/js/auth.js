@@ -26,7 +26,7 @@ async function handleLogin() {
 
   const res = await apiRequest("/auth/login", "POST", { email, password });
   if (res.ok) {
-    window.location.href = "/index.html";
+    window.location.href = "/home";
   } else {
     document.getElementById("login-error-text").textContent = res.message || "Login failed.";
     errorBox.style.display = "flex";
@@ -41,7 +41,7 @@ async function handleSignup() {
 
   const res = await apiRequest("/auth/signup", "POST", { email, password });
   if (res.ok) {
-    window.location.href = "/login.html";
+    window.location.href = "/login";
   } else {
     document.getElementById("signup-error-text").textContent = res.message || "Signup failed.";
     errorBox.style.display = "flex";
@@ -50,7 +50,7 @@ async function handleSignup() {
 
 async function handleLogout() {
   await apiRequest("/auth/logout", "POST");
-  window.location.href = "/login.html";
+  window.location.href = "/login";
 }
 
 // Toggles between light and dark mode and remembers the choice.

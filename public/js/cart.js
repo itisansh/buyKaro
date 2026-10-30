@@ -8,11 +8,13 @@ async function loadCart() {
   const totalSpan = document.getElementById("cart-total");
 
   if (res.status === 401) {
-    window.location.href = "/login.html";
+    window.location.href = "/login";
     return;
   }
 
-  if (!res.ok || !res.cart || res.cart.length === 0) {
+  if (!res.ok) { showToast(res.message || "Could not load your cart.", "error"); return; }
+  document.getElementById("checkout-btn").disabled = !res.cart?.length;
+  if (!res.cart || res.cart.length === 0) {
     tbody.innerHTML = "";
     emptyMsg.style.display = "flex";
     totalSpan.textContent = "0";
@@ -76,15 +78,19 @@ async function removeItem(itemId) {
 }
 
 async function checkout() {
+  const button = document.getElementById("checkout-btn");
+  button.disabled = true;
   const res = await apiRequest("/orders", "POST");
 
   if (res.ok) {
     showToast("Order placed successfully.", "success");
     setTimeout(() => {
-      window.location.href = "/orders.html";
+      window.location.href = "/orders";
     }, 700);
   } else {
     showToast(res.message || "Could not place order.", "error");
+    button.disabled = false;
+    loadCart();
   }
 }
 

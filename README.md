@@ -79,3 +79,7 @@ Visit `http://localhost:3000`
 ---
 
 Built by [Ansh Kumar Vishwakarma](https://github.com/itisansh)
+
+### Demo login
+
+Use **admin** as the username and **password** as the password. The login fields are prefilled for convenience. This shared demo account uses the same cart and order flows as other accounts. All in-memory accounts, carts, and orders reset when the server restarts.
