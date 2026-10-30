@@ -13,9 +13,11 @@ async function apiRequest(endpoint, method = "GET", body = null) {
     options.body = JSON.stringify(body);
   }
 
+  try {
   const res = await fetch(`${BASE_URL}${endpoint}`, options);
   const data = await res.json();
   return { status: res.status, ...data };
+  } catch { return { ok: false, status: 0, message: "Could not connect. Please try again." }; }
 }
 
 export { apiRequest };

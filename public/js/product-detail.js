@@ -2,8 +2,7 @@ import { apiRequest } from "./api.js";
 import { showToast } from "./toast.js";
 
 function getProductId() {
-  const params = new URLSearchParams(window.location.search);
-  return params.get("id");
+  return window.location.pathname.split("/").filter(Boolean).at(-1);
 }
 
 async function loadProduct() {
@@ -20,11 +19,10 @@ async function loadProduct() {
   const p = res.productObj;
   container.innerHTML = `
     <img src="${p.image}" alt="${p.name}" class="detail-image" decoding="async" width="260" height="220" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 260 220%22%3E%3Crect width=%22260%22 height=%22220%22 fill=%22%23F0EDFC%22/%3E%3C/svg%3E'">
-    <h1>${p.name}</h1>
+    <div class="detail-copy"><span class="eyebrow">${p.category}</span><h1>${p.name}</h1>
     <p class="price">₹${p.price}</p>
-    <p class="category">Category: ${p.category}</p>
-    <p class="stock">In stock: ${p.stock}</p>
-    <button id="add-to-cart-btn">Add to Cart</button>
+    <p class="stock">${p.stock > 0 ? `${p.stock} available` : "Currently unavailable"}</p>
+    <button id="add-to-cart-btn" ${p.stock === 0 ? "disabled" : ""}>${p.stock === 0 ? "Out of stock" : "Add to Cart"}</button></div>
   `;
 
   document
@@ -38,7 +36,7 @@ async function addToCart(itemId) {
   if (res.status === 401) {
     showToast("Please login to add items to your cart.", "info");
     setTimeout(() => {
-      window.location.href = "/login.html";
+      window.location.href = "/login";
     }, 700);
     return;
   }

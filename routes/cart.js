@@ -1,142 +1,36 @@
 import express from "express";
 import { products } from "../data/products.js";
-import {
-  users,
-  incrementQuantity,
-  updateQuantity,
-  deleteItem,
-} from "../data/users.js";
 import auth from "../middleware/auth.js";
 const router = express.Router();
-
-// ALL CART ROUTES MUST BE BEHIND middleware/auth.js, we check for req.session.userId
-
-//1. get cart of current user
-router.get("/", auth, (req, res, next) => {
-  try {
-    const userID = req.session.userId;
-
-    let user = users.find((user) => user.id == userID);
-    const cart = user.cart;
-    return res.status(200).send({
-      ok: true,
-      message: "user cart exists",
-      cart,
-    });
-  } catch (err) {
-    next(err);
-  }
+router.use(auth);
+const currentCart = user => user.cart.map(item => ({ ...item, stock: products.find(p => p.id === item.id)?.stock ?? 0 }));
+router.get("/", (req, res) => res.json({ ok: true, cart: currentCart(req.user) }));
+router.post("/add", (req, res) => {
+  const id = Number(req.body?.itemId);
+  if (!Number.isSafeInteger(id) || id < 1) return res.status(400).json({ ok: false, message: "Choose a valid product." });
+  const product = products.find(p => p.id === id);
+  if (!product) return res.status(404).json({ ok: false, message: "Product not found." });
+  const item = req.user.cart.find(p => p.id === id);
+  if ((item?.quantity ?? 0) >= product.stock) return res.status(409).json({ ok: false, message: "No more stock available.", availableStock: product.stock });
+  if (item) item.quantity++;
+  else req.user.cart.push({ ...product, quantity: 1 });
+  res.status(item ? 200 : 201).json({ ok: true, cart: currentCart(req.user) });
 });
-
-//2. add item add item or increment quantity if it already exists in cart
-router.post("/add", auth, (req, res, next) => {
-  try {
-    const itemId = req.body.itemId;
-
-    const userID = req.session.userId;
-
-    let user = users.find((user) => user.id == userID);
-    let cart = user.cart;
-
-    let item = products.find((product) => product.id == itemId);
-    if (!item)
-      return res.status(404).send({
-        ok: false,
-        message: "item not found",
-        cart,
-      });
-    if (cart.some((i) => i.id == item.id)) {
-      let itemObj = cart.find((i) => i.id == item.id);
-      // ISSUE HERE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-      // Imported bindings are read-only.
-      // We can't reassign them, but we can mutate their objects/arrays (push, pop, property updates). or like their keys' value
-      // incrementQuantity(itemObj);
-      itemObj.quantity++;
-      return res.status(200).send({
-        ok: true,
-        message: "item has been added again",
-        cart,
-      });
-    }
-    let cartItemObj = { ...item, quantity: 1 };
-    cart.push(cartItemObj);
-    return res.status(201).send({
-      ok: true,
-      message: "new item added",
-      cart,
-    });
-  } catch (err) {
-    next(err);
-  }
+router.put("/update", (req, res) => {
+  const id = Number(req.body?.itemId);
+  const quantity = Number(req.body?.quantity);
+  if (!Number.isSafeInteger(id) || id < 1 || !Number.isSafeInteger(quantity) || quantity < 1) return res.status(400).json({ ok: false, message: "Quantity must be a positive whole number." });
+  const item = req.user.cart.find(p => p.id === id);
+  const product = products.find(p => p.id === id);
+  if (!item || !product) return res.status(404).json({ ok: false, message: "Item not found in your cart." });
+  if (quantity > product.stock) return res.status(409).json({ ok: false, message: "Quantity exceeds available stock.", availableStock: product.stock });
+  item.quantity = quantity;
+  res.json({ ok: true, cart: currentCart(req.user) });
 });
-
-//3. update item
-router.put("/update", auth, (req, res, next) => {
-  try {
-    const quantity = parseInt(req.body.quantity);
-    const itemId = req.body.itemId;
-
-    const userID = req.session.userId;
-
-    let user = users.find((user) => user.id == userID);
-
-    let cart = user.cart;
-    let item = cart.find((product) => product.id == itemId);
-
-    let product = products.find((p) => p.id == itemId);
-
-    // Field Validation
-    if (!product) {
-      return res.status(400).send({
-        ok: false,
-        message: "product does not exist",
-      });
-    }
-    if (quantity <= 0 || quantity > product.stock || isNaN(quantity)) {
-      return res.status(400).send({
-        ok: false,
-        message: "quantity exceeds stock available",
-        availableStock: product.stock,
-      });
-    }
-
-    updateQuantity(item, quantity);
-
-    return res.status(200).send({
-      ok: true,
-      message: "user cart updated",
-      cart,
-    });
-  } catch (err) {
-    next(err);
-  }
+router.delete("/remove/:productId", (req, res) => {
+  const index = req.user.cart.findIndex(item => item.id === Number(req.params.productId));
+  if (index < 0) return res.status(404).json({ ok: false, message: "Item not found in your cart." });
+  req.user.cart.splice(index, 1);
+  res.json({ ok: true, cart: currentCart(req.user) });
 });
-
-//4. delete route
-router.delete("/remove/:productId", auth, (req, res, next) => {
-  try {
-    const id = parseInt(req.params.productId);
-
-    const userID = req.session.userId;
-
-    let user = users.find((u) => u.id == userID);
-    let cart = user.cart;
-    if (cart.some((item) => item.id == id)) {
-      deleteItem(id, user);
-      return res.status(200).send({
-        ok: true,
-        message: "item deleted",
-        cart,
-      });
-    }
-    return res.status(400).send({
-      ok: false,
-      message: "item does not exists",
-      cart,
-    });
-  } catch (err) {
-    next(err);
-  }
-});
-
 export default router;

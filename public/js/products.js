@@ -1,3 +1,4 @@
+import "./select.js";
 import { apiRequest } from "./api.js";
 import { showToast } from "./toast.js";
 
@@ -23,7 +24,8 @@ async function loadProducts(page = 1) {
   const res = await apiRequest(`/products${query}`);
   const list = document.getElementById("product-list");
 
-  if (!res.ok || !res.productArray || res.productArray.length === 0) {
+  if (!res.ok) { showToast(res.message || "Could not load products.", "error"); return; }
+  if (!res.productArray || res.productArray.length === 0) {
     list.innerHTML = `
       <div id="no-results" class="empty-state" style="display:flex; grid-column: 1 / -1;">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="10.5" cy="10.5" r="6.5"/><path d="M20 20l-4.3-4.3"/><path d="M8 8l5 5"/></svg>
@@ -37,13 +39,13 @@ async function loadProducts(page = 1) {
     .map(
       (p) => `
     <div class="product-card">
-      <a href="/product.html?id=${p.id}">
+      <a href="/products/${p.id}">
         <img src="${p.image}" alt="${p.name}" class="product-image" loading="lazy" decoding="async" width="300" height="160" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 300 160%22%3E%3Crect width=%22300%22 height=%22160%22 fill=%22%23F0EDFC%22/%3E%3C/svg%3E'">
       </a>
-      <h3><a href="/product.html?id=${p.id}">${p.name}</a></h3>
+      <h3><a href="/products/${p.id}">${p.name}</a></h3>
       <p class="price">₹${p.price}</p>
       <p class="category">${p.category}</p>
-      <button class="add-cart-btn" data-id="${p.id}">Add to Cart</button>
+      <button class="add-cart-btn" data-id="${p.id}" ${p.stock === 0 ? "disabled" : ""}>${p.stock === 0 ? "Out of stock" : "Add to Cart"}</button>
     </div>
   `,
     )
@@ -53,13 +55,13 @@ async function loadProducts(page = 1) {
     btn.addEventListener("click", () => addToCart(btn.dataset.id));
   });
 
-  updatePaginationButtons(page, res.productArray.length);
+  updatePaginationButtons(page, res.productArray.length, res.totalPages);
 }
 
-function updatePaginationButtons(page, resultCount) {
+function updatePaginationButtons(page, resultCount, totalPages = 0) {
   document.getElementById("page-label").textContent = `Page ${page}`;
   document.getElementById("prev-btn").disabled = page <= 1;
-  document.getElementById("next-btn").disabled = resultCount < limit;
+  document.getElementById("next-btn").disabled = page >= totalPages;
 }
 
 async function addToCart(itemId) {
@@ -68,7 +70,7 @@ async function addToCart(itemId) {
   if (res.status === 401) {
     showToast("Please login to add items to your cart.", "info");
     setTimeout(() => {
-      window.location.href = "/login.html";
+      window.location.href = "/login";
     }, 700);
     return;
   }
@@ -99,6 +101,12 @@ function closeFilterPanel() {
 }
 
 document.addEventListener("DOMContentLoaded", () => {
+  // Old hash bookmarks also resolve to the new shop route.
+  if (window.location.hash === "#shop") history.replaceState(null, "", "/shop");
+  if (window.location.pathname.replace(/\/$/, "") === "/shop") {
+    document.querySelector(".store-hero").hidden = true;
+    document.title = "Shop — buyKaro.";
+  }
   loadProducts(1);
 
   const filterBtn = document.getElementById("advanced-filter-btn");
